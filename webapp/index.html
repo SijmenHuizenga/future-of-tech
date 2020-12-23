@@ -38,6 +38,22 @@
             word-break: break-all;
             height: 80px;
         }
+
+        #prediction-containter {
+            position: relative;
+            height: 100px;
+        }
+
+        .prediction {
+            position: fixed;
+            font-size: 13px;
+            font-family: Courier New;
+            padding: 31px;
+            background-color: transparent;
+            transition-timing-function: ease;
+            transition-duration: 2s;
+            transition-property: transform;
+        }
     </style>
 </head>
 <body>
@@ -46,11 +62,13 @@
         My <strong>tech</strong> prediction for 2030
     </h1>
     <!-- todo: disallow multiline inputs: replace <enter> with action go to next field -->
-    <textarea placeholder="I predict..." class="wide" maxlength="256" rows="3" ></textarea>
+    <div id="prediction-containter" >
+        <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256" rows="3" ></textarea>
+    </div>
     <br/>
     <br/>
-    <input type="text" placeholder="Optional: What's your name?" maxlength="56"/>
-    <button>See ya in 30 years</button>
+    <input id="predictor-name" type="text" placeholder="Optional: What's your name?" maxlength="56"/>
+    <button id="send-button" >See ya in 30 years</button>
 </div>
 
 <!--Where do you think TECH lives in 2030?-->
@@ -66,6 +84,35 @@
 <!--We can't predict the future-->
 <!-- But let's do it anyway-->
 
+<script>
+    sendButton = document.getElementById('send-button');
+    predictionContainer = document.getElementById('prediction-containter');
+    predictionInput = document.getElementById('prediction-input');
+    predictorName = document.getElementById('predictor-name');
+
+    sendButton.addEventListener('click', () => {
+        const rect = predictionContainer.getBoundingClientRect();
+        const currx = rect.left + window.scrollX;
+        const curry = rect.top + window.scrollY;
+        const newx = Math.floor(Math.random() * (window.innerWidth -predictionInput.offsetWidth));
+        const newy = Math.floor(Math.random() * (window.innerHeight - predictionInput.offsetHeight));
+
+        // Create new prediction
+        const prediction = document.createElement("div")
+        prediction.classList.add('prediction');
+        prediction.style.width = predictionContainer.offsetWidth;
+        prediction.style.margin = `-${predictionInput.offsetHeight} 0 0`;
+        prediction.innerHTML = `"${predictionInput.value}"<br/>&nbsp- ${predictorName.value}`;
+        predictionContainer.insertBefore(prediction, predictionInput.nextSibling);
+        predictionInput.value = '';
+
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                prediction.style.transform = `translate(${newx - currx}px, ${newy - curry}px)`;
+            }, 1);
+        });
+    });
+</script>
 
 </body>
 </html>
