@@ -99,10 +99,12 @@
 
         // Create new prediction
         const prediction = document.createElement("div")
+        let text = `"${predictionInput.value}"`
+        text += predictorName.value ? `<br/>&nbsp- ${predictorName.value}`: '';
         prediction.classList.add('prediction');
         prediction.style.width = predictionContainer.offsetWidth;
         prediction.style.margin = `-${predictionInput.offsetHeight} 0 0`;
-        prediction.innerHTML = `"${predictionInput.value}"<br/>&nbsp- ${predictorName.value}`;
+        prediction.innerHTML = text;
         predictionContainer.insertBefore(prediction, predictionInput.nextSibling);
         predictionInput.value = '';
 
