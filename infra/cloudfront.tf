@@ -17,15 +17,15 @@ resource "aws_cloudfront_distribution" "website" {
 
   origin {
     domain_name = regex("https://(.*)/prod", aws_api_gateway_deployment.prod.invoke_url)[0]
-    origin_id = aws_api_gateway_deployment.prod.id
+    origin_id   = aws_api_gateway_deployment.prod.id
     origin_path = "/prod"
-    custom_origin_config  {
-      http_port = 80
-      https_port = 443
-      origin_protocol_policy = "https-only"
-      origin_ssl_protocols = ["SSLv3"]
+    custom_origin_config {
+      http_port                = 80
+      https_port               = 443
+      origin_protocol_policy   = "https-only"
+      origin_ssl_protocols     = ["SSLv3"]
       origin_keepalive_timeout = 5
-      origin_read_timeout = 5
+      origin_read_timeout      = 5
     }
   }
 
@@ -74,9 +74,9 @@ resource "aws_cloudfront_distribution" "website" {
     allowed_methods = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
 
     // get isn't being used but we have to put in SOMETHING for aws to enjoy our code
-    cached_methods   = ["GET", "HEAD"]
+    cached_methods = ["GET", "HEAD"]
 
-    path_pattern = "/api"
+    path_pattern           = "/api"
     viewer_protocol_policy = "redirect-to-https"
     forwarded_values {
       query_string = false

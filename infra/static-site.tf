@@ -52,7 +52,7 @@ locals {
 }
 
 resource "aws_s3_bucket_object" "website" {
-  for_each = fileset(path.module, "../webapp/**")
+  for_each     = fileset(path.module, "../webapp/**")
   bucket       = aws_s3_bucket.website.bucket
   key          = substr(each.value, length("../webapp/"), -1)
   source       = "${path.module}/${each.value}"
