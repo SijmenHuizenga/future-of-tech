@@ -67,11 +67,6 @@ resource "aws_cloudfront_distribution" "website" {
     max_ttl = 7 * 24 * 60 * 60
   }
 
-  logging_config {
-    include_cookies = false
-    bucket          = aws_s3_bucket.request-logs.bucket_domain_name
-  }
-
   ordered_cache_behavior {
     target_origin_id = aws_api_gateway_deployment.prod.id
 
@@ -104,13 +99,4 @@ resource "aws_cloudfront_distribution" "website" {
   }
 
   wait_for_deployment = false
-}
-
-resource "aws_s3_bucket" "request-logs" {
-  bucket        = "${var.domain_name}-cloudfront-logs"
-  acl           = "log-delivery-write"
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
