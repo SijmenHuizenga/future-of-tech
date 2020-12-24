@@ -31,12 +31,14 @@
             width: 50%;
             padding: 25px;
             border: solid 3px;
+            font-size: 13px;
         }
 
         input[type=text] {
             word-wrap: break-word;
             word-break: break-all;
             height: 80px;
+            font-family: 'monospace';
         }
 
         #prediction-containter {
@@ -45,10 +47,9 @@
         }
 
         .prediction {
-            position: fixed;
+            position: absolute;
             font-size: 13px;
-            font-family: Courier New;
-            padding: 31px;
+            font-family: 'monospace';
             background-color: transparent;
             transition-timing-function: ease;
             transition-duration: 2s;
@@ -67,7 +68,7 @@
     </div>
     <br/>
     <br/>
-    <input id="predictor-name" type="text" placeholder="Optional: What's your name?" maxlength="56"/>
+    <input id="author" type="text" placeholder="Optional: What's your name?" maxlength="56"/>
     <button id="send-button" >See ya in 30 years</button>
 </div>
 
@@ -85,32 +86,33 @@
 <!-- But let's do it anyway-->
 
 <script>
+    const inputBoxPadding = 25;
+
     sendButton = document.getElementById('send-button');
     predictionContainer = document.getElementById('prediction-containter');
     predictionInput = document.getElementById('prediction-input');
-    predictorName = document.getElementById('predictor-name');
+    author = document.getElementById('author');
 
     sendButton.addEventListener('click', () => {
-        const rect = predictionContainer.getBoundingClientRect();
-        const currx = rect.left + window.scrollX;
-        const curry = rect.top + window.scrollY;
-        const newx = Math.floor(Math.random() * (window.innerWidth -predictionInput.offsetWidth));
-        const newy = Math.floor(Math.random() * (window.innerHeight - predictionInput.offsetHeight));
-
-        // Create new prediction
         const prediction = document.createElement("div")
-        let text = `"${predictionInput.value}"`
-        text += predictorName.value ? `<br/>&nbsp- ${predictorName.value}`: '';
         prediction.classList.add('prediction');
-        prediction.style.width = predictionContainer.offsetWidth;
-        prediction.style.margin = `-${predictionInput.offsetHeight} 0 0`;
-        prediction.innerHTML = text;
+        prediction.style.maxWidth = predictionContainer.offsetWidth - 2*inputBoxPadding + "px";
+        prediction.style.margin = `-${predictionInput.offsetHeight - inputBoxPadding} 0 0 ${inputBoxPadding}`;
+        prediction.innerHTML = `"${predictionInput.value}"` + (author.value ? `<br/>&nbsp- ${author.value}`: '');
         predictionContainer.insertBefore(prediction, predictionInput.nextSibling);
         predictionInput.value = '';
 
         requestAnimationFrame(() => {
             setTimeout(() => {
-                prediction.style.transform = `translate(${newx - currx}px, ${newy - curry}px)`;
+              const rect = prediction.getBoundingClientRect();
+
+              const currx = rect.left + window.scrollX;
+              const curry = rect.top + window.scrollY;
+
+              const newx = Math.floor(Math.random() * (window.innerWidth - prediction.offsetWidth));
+              const newy = Math.floor(Math.random() * (window.innerHeight - prediction.offsetHeight));
+
+              prediction.style.transform = `translate(${newx - currx}px, ${newy - curry}px)`;
             }, 1);
         });
     });
