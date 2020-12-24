@@ -1,8 +1,7 @@
 <html>
 <head>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
@@ -17,6 +16,13 @@
         h1 {
             font-family: 'Caveat', cursive;
             font-weight: 400;
+            margin: 0;
+        }
+        h2 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            font-size: 18px;
+            color: gray;
         }
         strong {
             font-weight: 700;
@@ -63,10 +69,13 @@
         My <strong>tech</strong> prediction for 2030
     </h1>
     <!-- todo: disallow multiline inputs: replace <enter> with action go to next field -->
+    <h2>We are almost at the start of a next decade. Exciting isn't it?!
+        To celebrate we are creating a <b>time capsule</b> filled with tech-related predictions for the upcoming decade.
+        Let's all write down how we think technology will evolve, forget what we wrote, and open it in 2030.
+        I'm sure you will have a blast looking back at how expectations line up with reality.</h2>
     <div id="prediction-containter" >
         <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256" rows="3" ></textarea>
     </div>
-    <br/>
     <br/>
     <input id="author" type="text" placeholder="Optional: What's your name?" maxlength="56"/>
     <button id="send-button" >See ya in 30 years</button>
@@ -85,37 +94,60 @@
 <!--We can't predict the future-->
 <!-- But let's do it anyway-->
 
+<!-- Browser war -->
+
 <script>
     const inputBoxPadding = 25;
 
     sendButton = document.getElementById('send-button');
     predictionContainer = document.getElementById('prediction-containter');
     predictionInput = document.getElementById('prediction-input');
-    author = document.getElementById('author');
+    authorInput = document.getElementById('author');
 
     sendButton.addEventListener('click', () => {
-        const prediction = document.createElement("div")
-        prediction.classList.add('prediction');
-        prediction.style.maxWidth = predictionContainer.offsetWidth - 2*inputBoxPadding + "px";
-        prediction.style.margin = `-${predictionInput.offsetHeight - inputBoxPadding} 0 0 ${inputBoxPadding}`;
-        prediction.innerHTML = `"${predictionInput.value}"` + (author.value ? `<br/>&nbsp- ${author.value}`: '');
-        predictionContainer.insertBefore(prediction, predictionInput.nextSibling);
-        predictionInput.value = '';
+        const prediction = predictionInput.value;
+        const author = authorInput.value === "" ? null : authorInput.value;
 
-        requestAnimationFrame(() => {
-            setTimeout(() => {
-              const rect = prediction.getBoundingClientRect();
+        if(prediction === "") {
+          alert("The prediction paper is still empty. I'm sure you can think of something that will change... Get inspired by the sample quotes in the background.")
+          return;
+        }
 
-              const currx = rect.left + window.scrollX;
-              const curry = rect.top + window.scrollY;
-
-              const newx = Math.floor(Math.random() * (window.innerWidth - prediction.offsetWidth));
-              const newy = Math.floor(Math.random() * (window.innerHeight - prediction.offsetHeight));
-
-              prediction.style.transform = `translate(${newx - currx}px, ${newy - curry}px)`;
-            }, 1);
+        fetch("/api", {
+          method: "POST",
+          body: JSON.stringify({prediction, author})
+        }).then(res => {
+            spawnPrediction(prediction, author)
+        })
+        .catch((err) => {
+          console.log(err)
+          alert("The prediction could not be added to the time capsule. Try again later.")
         });
     });
+
+    function spawnPrediction(prediction, author) {
+      const predictionElement = document.createElement("div");
+      predictionElement.classList.add('prediction');
+      predictionElement.style.maxWidth = predictionContainer.offsetWidth - 2*inputBoxPadding + "px";
+      predictionElement.style.margin = `-${predictionInput.offsetHeight - inputBoxPadding} 0 0 ${inputBoxPadding}`;
+      predictionElement.innerHTML = `"${prediction}"` + (author ? `<br/>&nbsp;- ${author}`: '');
+      predictionContainer.insertBefore(predictionElement, predictionInput.nextSibling);
+      predictionInput.value = '';
+
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const rect = predictionElement.getBoundingClientRect();
+
+          const currx = rect.left + window.scrollX;
+          const curry = rect.top + window.scrollY;
+
+          const newx = Math.floor(Math.random() * (window.innerWidth - predictionElement.offsetWidth));
+          const newy = Math.floor(Math.random() * (window.innerHeight - predictionElement.offsetHeight));
+
+          predictionElement.style.transform = `translate(${newx - currx}px, ${newy - curry}px)`;
+        }, 1);
+      });
+    }
 </script>
 
 </body>

@@ -43,7 +43,7 @@ exports.handler = function (event, context, callback) {
     Item: {
       'UUID' : {S: context.awsRequestId},
       'prediction': {S: json['prediction']},
-      'name': {S: json.hasOwnProperty('name') ? json['name'] : ''},
+      'author': {S: json.hasOwnProperty('author') ? json['author'] : ''},
       'timestamp': {N: ''+Math.floor(new Date().getTime() / 1000)},
     }
   }, (err, data) => {
