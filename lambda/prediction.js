@@ -4,8 +4,6 @@ var AWS = require('aws-sdk');
 var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 exports.handler = function (event, context, callback) {
-  console.log(JSON.stringify(event, null, 2));
-
   if(event == null || !event.hasOwnProperty('body') || event["body"] == null) {
     callback(null, {
       statusCode: 400,
