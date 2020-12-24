@@ -5,24 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
+        body {
+            background: #101044;
+            overflow: hidden;
+        }
 
-        .container {
-            padding-top: 10vh;
-            margin: auto;
-            max-width: 700px;
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
             font-size: 2rem;
+        }
+
+        #content {
+            max-width: 700px;
+            transition-timing-function: ease-in;
+            transition-duration: 3s;
+            transition-property: transform;
+            transform-origin: center;
         }
 
         h1 {
             font-family: 'Caveat', cursive;
             font-weight: 400;
             margin: 0;
+            color: white;
         }
         h2 {
             font-family: 'Roboto', sans-serif;
             font-weight: 300;
             font-size: 18px;
-            color: gray;
+            color: white;
         }
         strong {
             font-weight: 700;
@@ -31,12 +46,16 @@
         textarea {
             width: 100%;
             padding: 25px;
-            border: solid 3px;
+            color: white;
+            background-color: transparent;
+            border: white solid 3px;
         }
         input {
             width: 50%;
             padding: 25px;
-            border: solid 3px;
+            color: white;
+            background-color: transparent;
+            border: white solid 3px;
             font-size: 13px;
         }
 
@@ -55,30 +74,30 @@
         .prediction {
             position: absolute;
             font-size: 13px;
+            color: white;
             font-family: 'monospace';
             background-color: transparent;
-            transition-timing-function: ease;
-            transition-duration: 2s;
-            transition-property: transform;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>
-        My <strong>tech</strong> prediction for 2030
-    </h1>
-    <!-- todo: disallow multiline inputs: replace <enter> with action go to next field -->
-    <h2>We are almost at the start of a next decade. Exciting isn't it?!
-        To celebrate we are creating a <b>time capsule</b> filled with tech-related predictions for the upcoming decade.
-        Let's all write down how we think technology will evolve, forget what we wrote, and open it in 2030.
-        I'm sure you will have a blast looking back at how expectations line up with reality.</h2>
-    <div id="prediction-containter" >
-        <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256" rows="3" ></textarea>
+<div id="container">
+    <div id="content">
+        <h1>
+            My <strong>tech</strong> prediction for 2030
+        </h1>
+        <!-- todo: disallow multiline inputs: replace <enter> with action go to next field -->
+        <h2>We are almost at the start of a next decade. Exciting isn't it?!
+            To celebrate we are creating a <b>time capsule</b> filled with tech-related predictions for the upcoming decade.
+            Let's all write down how we think technology will evolve, forget what we wrote, and open it in 2030.
+            I'm sure you will have a blast looking back at how expectations line up with reality.</h2>
+        <div id="prediction-containter" >
+            <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256" rows="3" ></textarea>
+        </div>
+        <br/>
+        <input id="author" type="text" placeholder="Optional: What's your name?" maxlength="56"/>
+        <button id="send-button" >See ya in 30 years</button>
     </div>
-    <br/>
-    <input id="author" type="text" placeholder="Optional: What's your name?" maxlength="56"/>
-    <button id="send-button" >See ya in 30 years</button>
 </div>
 
 <!--Where do you think TECH lives in 2030?-->
@@ -98,9 +117,9 @@
 
 <script>
     const inputBoxPadding = 25;
-
+    
+    content = document.getElementById('content');
     sendButton = document.getElementById('send-button');
-    predictionContainer = document.getElementById('prediction-containter');
     predictionInput = document.getElementById('prediction-input');
     authorInput = document.getElementById('author');
 
@@ -126,27 +145,19 @@
     });
 
     function spawnPrediction(prediction, author) {
-      const predictionElement = document.createElement("div");
-      predictionElement.classList.add('prediction');
-      predictionElement.style.maxWidth = predictionContainer.offsetWidth - 2*inputBoxPadding + "px";
-      predictionElement.style.margin = `-${predictionInput.offsetHeight - inputBoxPadding} 0 0 ${inputBoxPadding}`;
-      predictionElement.innerHTML = `"${prediction}"` + (author ? `<br/>&nbsp;- ${author}`: '');
-      predictionContainer.insertBefore(predictionElement, predictionInput.nextSibling);
-      predictionInput.value = '';
-
-      requestAnimationFrame(() => {
+        content.style.transform = `scale(0, 0)`;
         setTimeout(() => {
-          const rect = predictionElement.getBoundingClientRect();
-
-          const currx = rect.left + window.scrollX;
-          const curry = rect.top + window.scrollY;
-
-          const newx = Math.floor(Math.random() * (window.innerWidth - predictionElement.offsetWidth));
-          const newy = Math.floor(Math.random() * (window.innerHeight - predictionElement.offsetHeight));
-
-          predictionElement.style.transform = `translate(${newx - currx}px, ${newy - curry}px)`;
-        }, 1);
-      });
+            content.style.transitionDuration = '0s';
+            content.style.transform = `scale(200, 200)`
+            predictionInput.value = '';
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    content.style.transitionDuration = '3s';
+                    content.style.transform = `scale(1, 1)`
+                    content.style.transitionTimingFunction = 'ease';
+                }, 1)
+            });
+        }, 3000);
     }
 </script>
 
