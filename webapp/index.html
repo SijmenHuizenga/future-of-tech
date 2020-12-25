@@ -1,13 +1,20 @@
 <html>
 <head>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Roboto:wght@300;400&display=swap"
+          rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
         body {
             background: #101044;
             overflow: hidden;
+            font-family: /*Safari for OS X and iOS (San Francisco)*/ -apple-system,
+                /*Chrome < 56 for OS X (San Francisco)*/ BlinkMacSystemFont,
+                /*Windows*/ "Segoe UI",
+                /*Android*/ "Roboto",
+                /*Basic web fallback */ "Helvetica Neue", Arial, sans-serif,
+                /*Emoji fonts*/ "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         }
 
         #container {
@@ -33,14 +40,20 @@
             margin: 0;
             color: white;
         }
+
         h2 {
-            font-family: 'Roboto', sans-serif;
             font-weight: 300;
             font-size: 18px;
             color: white;
         }
+
         strong {
             font-weight: 700;
+        }
+
+        textarea, button, input, input[type=text] {
+            font-family: inherit;
+            font-size: 16px;
         }
 
         textarea {
@@ -49,9 +62,11 @@
             color: white;
             background-color: transparent;
             border: white solid 3px;
+
+            grid-column-start: span 2;
         }
+
         input {
-            width: 50%;
             padding: 25px;
             color: white;
             background-color: transparent;
@@ -62,21 +77,34 @@
         input[type=text] {
             word-wrap: break-word;
             word-break: break-all;
-            height: 80px;
-            font-family: 'monospace';
         }
 
-        #prediction-containter {
-            position: relative;
-            height: 100px;
-        }
-
-        .prediction {
-            position: absolute;
-            font-size: 13px;
-            color: white;
-            font-family: 'monospace';
+        button {
+            padding: 25px;
+            border: white solid 3px;
             background-color: transparent;
+            color: white;
+        }
+
+        button:hover {
+            background-color: white;
+            color: #101044;
+        }
+
+        .inputgrid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, auto);
+            grid-gap: 15px;
+        }
+        @media (max-width: 800px) {
+            .inputgrid {
+                grid-template-columns: repeat(1, 1fr);
+                grid-template-rows: repeat(3, auto);
+            }
+            textarea {
+                grid-column-start: span 1;
+            }
         }
     </style>
 </head>
@@ -88,15 +116,15 @@
         </h1>
         <!-- todo: disallow multiline inputs: replace <enter> with action go to next field -->
         <h2>We are almost at the start of a next decade. Exciting isn't it?!
-            To celebrate we are creating a <b>time capsule</b> filled with tech-related predictions for the upcoming decade.
+            To celebrate we are creating a <b>time capsule</b> filled with tech-related predictions for the upcoming
+            decade.
             Let's all write down how we think technology will evolve, forget what we wrote, and open it in 2030.
             I'm sure you will have a blast looking back at how expectations line up with reality.</h2>
-        <div id="prediction-containter" >
-            <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256" rows="3" ></textarea>
+        <div class="inputgrid">
+            <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256" rows="3"></textarea>
+            <input id="author" type="text" placeholder="What's your name?   (optional)" maxlength="56"/>
+            <button id="send-button">Store prediction for in 10 years</button>
         </div>
-        <br/>
-        <input id="author" type="text" placeholder="Optional: What's your name?" maxlength="56"/>
-        <button id="send-button" >See ya in 30 years</button>
     </div>
 </div>
 
@@ -120,57 +148,62 @@
     authorInput = document.getElementById('author');
 
     const examplePredictions = [
-      'The browser war will be dominated by opera',
-      'The go-to place for tech-questions will still be StackOverflow',
-      'Marques Brownlee will surpass PewDiePie in number of subscribers',
-      'Angular will have more users than React and Vue combined',
-      'Git will have been replaced by something different',
-      'Many poor souls are still stuck in vim',
-      'Google will encounter a week long global outage',
-      'All smartphones will have 4K displays',
-      'In 2030 some people live on mars',
-      'The first war between humans and AI will be in progress',
-      'In 2030 some humans will be immortable with the help of AI',
-      'A time-traveler from the future will visit us',
-      'In 2030 quantum computers are required to play the latest AAA games',
-      'Cognitive technically stimuli will be generally available',
-      'Python 4 will be the most celebrated language',
-      "I'm going on a spaceday (space holiday) will have been added to the dictionary",
-      "AWS will have discontinued EC2 in favor of Lambda's",
-      'In 10 years people will still believe VR will be a big thing any moment now',
-      'The most prominent used chat application will we Facebook Messenger',
-      "Everything with a power plug will be 'smart' by default",
-      'All parents will tracking the whereabouts of their children continuously',
-      'The number of NPM packages will exceed the amount of grains of sand in an average garden pot',
-      'Pace of technology change will increaste exponentionally',
-      'Pace of technology change will decreaste slowly',
-      'In 2030 the ISS will exclusivly be a hotel',
-      'A single bitcoin will be worth 1 mil',
-      'Blockchain miners will take up 30%+ of the world\'s energy consumption'
-    ]
+        'The browser war will be dominated by opera',
+        'The go-to place for tech-questions will still be StackOverflow',
+        'Marques Brownlee will surpass PewDiePie in number of subscribers',
+        'Angular will have more users than React and Vue combined',
+        'Git will have been replaced by something different',
+        'Many poor souls are still stuck in vim',
+        'Google will encounter a week long global outage',
+        'All smartphones will have 4K displays',
+        'In 2030 some people live on mars',
+        'The first war between humans and AI will be in progress',
+        'In 2030 some humans will be immortable with the help of AI',
+        'A time-traveler from the future will visit us',
+        'In 2030 quantum computers are required to play the latest AAA games',
+        'Cognitive technically stimuli will be generally available',
+        'Python 4 will be the most celebrated language',
+        "I'm going on a spaceday (space holiday) will have been added to the dictionary",
+        "AWS will have discontinued EC2 in favor of Lambda's",
+        'In 10 years people will still believe VR will be a big thing any moment now',
+        'The most prominent used chat application will we Facebook Messenger',
+        "Everything with a power plug will be 'smart' by default",
+        'All parents will tracking the whereabouts of their children continuously',
+        'The number of NPM packages will exceed the amount of grains of sand in an average garden pot',
+        'Pace of technology change will increaste exponentionally',
+        'Pace of technology change will decreaste slowly',
+        'In 2030 the ISS will exclusivly be a hotel',
+        'A single bitcoin will be worth 1 mil',
+        'Blockchain miners will take up 30%+ of the world\'s energy consumption'
+    ];
 
     sendButton.addEventListener('click', () => {
         const prediction = predictionInput.value;
         const author = authorInput.value === "" ? null : authorInput.value;
 
-        if(prediction === "") {
-          alert("The prediction paper is still empty. I'm sure you can think of something that will change... Get inspired by the sample quotes in the background.")
-          return;
+        if (prediction === "") {
+            alert("The prediction paper is still empty. I'm sure you can think of something that will change...");
+            return;
         }
 
         fetch("/api", {
-          method: "POST",
-          body: JSON.stringify({prediction, author})
+            method: "POST",
+            body: JSON.stringify({prediction, author})
         }).then(res => {
-            spawnPrediction(prediction, author)
+            if (res.ok) {
+                spawnPrediction()
+            } else {
+                console.log(res);
+                alert("The prediction could not be added to the time capsule. Try again later.")
+            }
         })
-        .catch((err) => {
-          console.log(err)
-          alert("The prediction could not be added to the time capsule. Try again later.")
-        });
+            .catch((err) => {
+                console.log(err);
+                alert("The prediction could not be added to the time capsule. Try again later.")
+            });
     });
 
-    function spawnPrediction(prediction, author) {
+    function spawnPrediction() {
         content.style.transform = `scale(0, 0)`;
         setTimeout(() => {
             content.style.transitionDuration = '0s';
