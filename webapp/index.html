@@ -43,7 +43,7 @@
 
         h2 {
             font-weight: 300;
-            font-size: 18px;
+            font-size: 20px;
             color: white;
         }
 
@@ -86,7 +86,7 @@
             color: white;
         }
 
-        button:hover {
+        button:hover:enabled {
             background-color: white;
             color: #101044;
         }
@@ -111,34 +111,30 @@
 <body>
 <div id="container">
     <div id="content">
+
+        <!--Time flies,-->
+        <!--Let's predict where to-->
+
+
+        <!--We can't predict the future-->
+        <!-- But let's do it anyway-->
+
         <h1>
             2030 <strong>tech</strong> predictions
         </h1>
-        <h2>We are almost at the start of a next decade. Exciting isn't it?!
-            To celebrate we are creating a <b>time capsule</b> filled with tech-related predictions for the upcoming
-            decade.
-            Let's all write down how we think technology will evolve, forget what we wrote, and open it in 2030.
-            I'm sure you will have a blast looking back at how expectations line up with reality.</h2>
+        <h2>Tech is evolving. Exciting, isn't it?<br/>
+            To celebrate we are creating a <b>time capsule</b> packed with <b>tech-related predictions</b>.
+            We all write down how we think technology will evolve and publish the predictions at then end of 2030.
+            I'm sure you will have a blast looking back at how expectations line up with reality.
+            You are invited to add your predictions as well!
+        </h2>
         <div class="inputgrid">
             <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256" rows="3"></textarea>
-            <input id="author" type="text" placeholder="What's your name?   (optional)" maxlength="56"/>
+            <input id="author" type="text" placeholder="My name is...   (optional)" maxlength="56"/>
             <button id="send-button">Store prediction for in 10 years</button>
         </div>
     </div>
 </div>
-
-<!--Where do you think TECH lives in 2030?-->
-
-
-<!--How do you think technology works in 2030?-->
-
-
-<!--Time flies,-->
-<!--Let's predict where to-->
-
-
-<!--We can't predict the future-->
-<!-- But let's do it anyway-->
 
 <script>
     content = document.getElementById('content');
@@ -183,11 +179,13 @@
     ];
 
     sendButton.addEventListener('click', () => {
+        inputDisabled(true);
         const prediction = predictionInput.value;
         const author = authorInput.value === "" ? null : authorInput.value;
 
         if (prediction === "") {
             alert("The prediction paper is still empty. I'm sure you can think of something that will change...");
+            inputDisabled(false);
             return;
         }
 
@@ -196,32 +194,43 @@
             body: JSON.stringify({prediction, author})
         }).then(res => {
             if (res.ok) {
-                spawnPrediction()
+                predictionInput.value = '';
+                gotoThanks();
             } else {
                 console.log(res);
                 alert("The prediction could not be added to the time capsule. Try again later.")
             }
+            inputDisabled(false);
         })
             .catch((err) => {
                 console.log(err);
-                alert("The prediction could not be added to the time capsule. Try again later.")
+                alert("Error: The prediction could not be added to the time capsule. Try again later.");
+                inputDisabled(false);
             });
     });
 
-    function spawnPrediction() {
+    function gotoThanks() {
         content.style.transform = `scale(0, 0)`;
         setTimeout(() => {
-            content.style.transitionDuration = '0s';
-            content.style.transform = `scale(200, 200)`;
-            predictionInput.value = '';
-            requestAnimationFrame(() => {
-                setTimeout(() => {
-                    content.style.transitionDuration = '3s';
-                    content.style.transform = `scale(1, 1)`;
-                    content.style.transitionTimingFunction = 'ease';
-                }, 1)
-            });
+            goToInput()
         }, 3000);
+    }
+
+    function goToInput() {
+        content.style.transitionTimingFunction = 'ease-in';
+        content.style.transitionDuration = '0s';
+        content.style.transform = `scale(80, 80)`;
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                content.style.transitionDuration = '3s';
+                content.style.transform = `scale(1, 1)`;
+                content.style.transitionTimingFunction = 'ease-out';
+            }, 1)
+        });
+    }
+
+    function inputDisabled(disabled) {
+        sendButton.disabled = disabled;
     }
 </script>
 
