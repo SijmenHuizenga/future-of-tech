@@ -4,10 +4,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Roboto:wght@300;400&display=swap"
           rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Time flies,-->
+    <!--Let's predict where to-->
 
+
+    <!--We can't predict the future-->
+    <!-- But let's do it anyway-->
     <style>
         body {
             background: #101044;
+            color: white;
             overflow: hidden;
             font-family: /*Safari for OS X and iOS (San Francisco)*/ -apple-system,
                 /*Chrome < 56 for OS X (San Francisco)*/ BlinkMacSystemFont,
@@ -26,12 +32,32 @@
             font-size: 2rem;
         }
 
-        #content {
+        .content {
             max-width: 700px;
+            position: relative;
+        }
+
+        #input-form-container {
             transition-timing-function: ease-in;
             transition-duration: 3s;
             transition-property: transform;
             transform-origin: center;
+        }
+        #thanks-container {
+            text-align: center;
+
+            transition: opacity ease-in-out 1.5s;
+            opacity: 0;
+            display: none;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+        #thanks-container.show {
+            transition: opacity ease-in-out 1.5s;
+            opacity: 1;
         }
 
         h1 {
@@ -41,7 +67,7 @@
             color: white;
         }
 
-        h2 {
+        p {
             font-weight: 300;
             font-size: 20px;
             color: white;
@@ -53,7 +79,7 @@
 
         textarea, button, input, input[type=text] {
             font-family: inherit;
-            font-size: 16px;
+            font-size: 20px;
         }
 
         textarea {
@@ -71,7 +97,6 @@
             color: white;
             background-color: transparent;
             border: white solid 3px;
-            font-size: 13px;
         }
 
         input[type=text] {
@@ -110,35 +135,37 @@
 </head>
 <body>
 <div id="container">
-    <div id="content">
-
-        <!--Time flies,-->
-        <!--Let's predict where to-->
-
-
-        <!--We can't predict the future-->
-        <!-- But let's do it anyway-->
-
-        <h1>
-            2030 <strong>tech</strong> predictions
-        </h1>
-        <h2>Tech is evolving. Exciting, isn't it?<br/>
-            To celebrate we are creating a <b>time capsule</b> packed with <b>tech-related predictions</b>.
-            We all write down how we think technology will evolve and publish the predictions at then end of 2030.
-            I'm sure you will have a blast looking back at how expectations line up with reality.
-            You are invited to add your predictions as well!
-        </h2>
-        <div class="inputgrid">
-            <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256" rows="3"></textarea>
-            <input id="author" type="text" placeholder="My name is...   (optional)" maxlength="56"/>
-            <button id="send-button">Store prediction for in 10 years</button>
+    <div class="content">
+        <div id="input-form-container">
+            <h1>
+                2030 <strong>tech</strong> predictions
+            </h1>
+            <p>Tech is evolving. Exciting, isn't it?<br/>
+                To celebrate we are creating a <b>time capsule</b> packed with <b>tech-related predictions</b>.
+                We all write down how we think technology will evolve and publish the predictions at then end of 2030.
+                I'm sure you will have a blast looking back at how expectations line up with reality.
+                You are invited to add your predictions as well!
+            </p>
+            <div class="inputgrid">
+                <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256" rows="3"></textarea>
+                <input id="author" type="text" placeholder="My name is...   (optional)" maxlength="56"/>
+                <button id="send-button">Store prediction for in 10 years</button>
+            </div>
+        </div>
+        <div class="content hidden" id="thanks-container">
+            <h1>Thanks</h1>
+            <p>Who else would you like to hear predictions from? Send them a message!</p>
+            <blockquote>"Hi! I'm adding my tech predictions to a time capsule. Would you like to join me?"</blockquote>
+            <button id="another-one-button">Submit another one</button>
         </div>
     </div>
 </div>
 
 <script>
-    content = document.getElementById('content');
+    inputFormContainer = document.getElementById('input-form-container');
+    thanksFormContainer = document.getElementById('thanks-container');
     sendButton = document.getElementById('send-button');
+    anotherButton = document.getElementById('another-one-button');
     predictionInput = document.getElementById('prediction-input');
     authorInput = document.getElementById('author');
 
@@ -209,23 +236,33 @@
             });
     });
 
+    anotherButton.addEventListener('click', () => {
+        goToInput();
+    });
+
     function gotoThanks() {
-        content.style.transform = `scale(0, 0)`;
+        inputFormContainer.style.transform = `scale(0, 0)`;
+        // wait until the input has vanished
         setTimeout(() => {
-            goToInput()
+            // show the 'thanks' elements
+            thanksFormContainer.style.display = 'block';
+            requestAnimationFrame(() => thanksFormContainer.classList.add('show'));
         }, 3000);
     }
 
     function goToInput() {
-        content.style.transitionTimingFunction = 'ease-in';
-        content.style.transitionDuration = '0s';
-        content.style.transform = `scale(80, 80)`;
+        // hide the 'thanks' elements
+        thanksFormContainer.classList.remove('show');
+        setTimeout(() => thanksFormContainer.style.display = 'none', 1500);
+
+        // make the form appear
+        inputFormContainer.style.transitionTimingFunction = 'ease-in';
+        inputFormContainer.style.transitionDuration = '0s';
+        inputFormContainer.style.transform = `scale(80, 80)`;
         requestAnimationFrame(() => {
-            setTimeout(() => {
-                content.style.transitionDuration = '3s';
-                content.style.transform = `scale(1, 1)`;
-                content.style.transitionTimingFunction = 'ease-out';
-            }, 1)
+            inputFormContainer.style.transitionDuration = '3s';
+            inputFormContainer.style.transform = `scale(1, 1)`;
+            inputFormContainer.style.transitionTimingFunction = 'ease-out';
         });
     }
 
