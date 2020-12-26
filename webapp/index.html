@@ -1,11 +1,15 @@
 <html lang="en">
 <head>
+    <title>Future of Tech</title>
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Roboto:wght@300;400&display=swap"
           rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script src="https://www.google.com/recaptcha/api.js"></script>
-    <title>Future of Tech</title>
 
     <!--Time flies,-->
     <!--Let's predict where to-->
@@ -13,132 +17,6 @@
 
     <!--We can't predict the future-->
     <!-- But let's do it anyway-->
-    <style>
-        body {
-            background: #101044;
-            color: white;
-            overflow: hidden;
-            font-family: /*Safari for OS X and iOS (San Francisco)*/ -apple-system,
-                /*Chrome < 56 for OS X (San Francisco)*/ BlinkMacSystemFont,
-                /*Windows*/ "Segoe UI",
-                /*Android*/ "Roboto",
-                /*Basic web fallback */ "Helvetica Neue", Arial, sans-serif,
-                /*Emoji fonts*/ "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-        }
-
-        #container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            font-size: 2rem;
-        }
-
-        .content {
-            max-width: 700px;
-            position: relative;
-        }
-
-        #input-form-container {
-            transition-timing-function: ease-in;
-            transition-duration: 3s;
-            transition-property: transform;
-            transform-origin: center;
-        }
-
-        #thanks-container {
-            text-align: center;
-
-            transition: opacity ease-in-out 1.5s;
-            opacity: 0;
-            display: none;
-
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
-
-        #thanks-container.show {
-            transition: opacity ease-in-out 1.5s;
-            opacity: 1;
-        }
-
-        h1 {
-            font-family: 'Caveat', cursive;
-            font-weight: 400;
-            margin: 0;
-            color: white;
-        }
-
-        p {
-            font-weight: 300;
-            font-size: 20px;
-            color: white;
-        }
-
-        strong {
-            font-weight: 700;
-        }
-
-        textarea, button, input, input[type=text] {
-            font-family: inherit;
-            font-size: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 25px;
-            color: white;
-            background-color: transparent;
-            border: white solid 3px;
-
-            grid-column-start: span 2;
-        }
-
-        input {
-            padding: 25px;
-            color: white;
-            background-color: transparent;
-            border: white solid 3px;
-        }
-
-        input[type=text] {
-            word-wrap: break-word;
-            word-break: break-all;
-        }
-
-        button {
-            padding: 25px;
-            border: white solid 3px;
-            background-color: transparent;
-            color: white;
-        }
-
-        button:hover:enabled {
-            background-color: white;
-            color: #101044;
-        }
-
-        .inputgrid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, auto);
-            grid-gap: 15px;
-        }
-
-        @media (max-width: 800px) {
-            .inputgrid {
-                grid-template-columns: repeat(1, 1fr);
-                grid-template-rows: repeat(3, auto);
-            }
-
-            textarea {
-                grid-column-start: span 1;
-            }
-        }
-    </style>
 </head>
 <body>
 <div id="container">
@@ -169,126 +47,7 @@
     </div>
 </div>
 
-<script>
-    inputFormContainer = document.getElementById('input-form-container');
-    thanksFormContainer = document.getElementById('thanks-container');
-    sendButton = document.getElementById('send-button');
-    anotherButton = document.getElementById('another-one-button');
-    predictionInput = document.getElementById('prediction-input');
-    authorInput = document.getElementById('author');
-
-    predictionInput.onkeydown = (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-        }
-    };
-
-    const examplePredictions = [
-        'The browser war will be dominated by opera',
-        'The go-to place for tech-questions will still be StackOverflow',
-        'Marques Brownlee will surpass PewDiePie in number of subscribers',
-        'Angular will have more users than React and Vue combined',
-        'Git will have been replaced by something different',
-        'Many poor souls are still stuck in vim',
-        'Google will encounter a week long global outage',
-        'All smartphones will have 4K displays',
-        'In 2030 some people live on mars',
-        'The first war between humans and AI will be in progress',
-        'In 2030 some humans will be immortable with the help of AI',
-        'A time-traveler from the future will visit us',
-        'In 2030 quantum computers are required to play the latest AAA games',
-        'Cognitive technically stimuli will be generally available',
-        'Python 4 will be the most celebrated language',
-        "I'm going on a spaceday (space holiday) will have been added to the dictionary",
-        "AWS will have discontinued EC2 in favor of Lambda's",
-        'In 10 years people will still believe VR will be a big thing any moment now',
-        'The most prominent used chat application will we Facebook Messenger',
-        "Everything with a power plug will be 'smart' by default",
-        'All parents will tracking the whereabouts of their children continuously',
-        'The number of NPM packages will exceed the amount of grains of sand in an average garden pot',
-        'Pace of technology change will increaste exponentionally',
-        'Pace of technology change will decreaste slowly',
-        'In 2030 the ISS will exclusivly be a hotel',
-        'A single bitcoin will be worth 1 mil',
-        'Blockchain miners will take up 30%+ of the world\'s energy consumption'
-    ];
-
-    sendButton.addEventListener('click', () => {
-        inputDisabled(true);
-        const prediction = predictionInput.value;
-        const author = authorInput.value === "" ? null : authorInput.value;
-
-        if (prediction === "") {
-            alert("The prediction paper is still empty. I'm sure you can think of something that will change...");
-            inputDisabled(false);
-            return;
-        }
-
-        grecaptcha.ready(() => {
-            try {
-                grecaptcha.execute('6LffnBUaAAAAAF3bHkMdZigKelMh6tvOV-BgTMFz', {action: 'submit'})
-                    .then((grecaptchatoken) => fetch("/api", {
-                        method: "POST",
-                        body: JSON.stringify({prediction, author, grecaptchatoken})
-                    }))
-                    .then(res => {
-                        if (res.ok) {
-                            predictionInput.value = '';
-                            gotoThanks();
-                        } else {
-                            console.log(res);
-                            alert("The prediction could not be added to the time capsule. Try again later.")
-                        }
-                        inputDisabled(false);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        alert("Error: The prediction could not be added to the time capsule. Try again later.");
-                        inputDisabled(false);
-                    });
-            } catch (e) {
-                //sometimes recapcha execute throws an error outside of promise (aaah)
-                console.log(e);
-                alert("Re-capcha failed. Try again later");
-                inputDisabled(false);
-            }
-        });
-    });
-
-    anotherButton.addEventListener('click', () => {
-        goToInput();
-    });
-
-    function gotoThanks() {
-        inputFormContainer.style.transform = `scale(0, 0)`;
-        // wait until the input has vanished
-        setTimeout(() => {
-            // show the 'thanks' elements
-            thanksFormContainer.style.display = 'block';
-            requestAnimationFrame(() => thanksFormContainer.classList.add('show'));
-        }, 3000);
-    }
-
-    function goToInput() {
-        // hide the 'thanks' elements
-        thanksFormContainer.classList.remove('show');
-        setTimeout(() => thanksFormContainer.style.display = 'none', 1500);
-
-        // make the form appear
-        inputFormContainer.style.transitionTimingFunction = 'ease-in';
-        inputFormContainer.style.transitionDuration = '0s';
-        inputFormContainer.style.transform = `scale(80, 80)`;
-        requestAnimationFrame(() => {
-            inputFormContainer.style.transitionDuration = '3s';
-            inputFormContainer.style.transform = `scale(1, 1)`;
-            inputFormContainer.style.transitionTimingFunction = 'ease-out';
-        });
-    }
-
-    function inputDisabled(disabled) {
-        sendButton.disabled = disabled;
-    }
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
