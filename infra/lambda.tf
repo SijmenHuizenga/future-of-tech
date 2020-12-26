@@ -1,4 +1,7 @@
 
+variable "RECAPCHA_SERVER_TOKEN" {}
+
+
 data "archive_file" "lamda_prediction" {
   type        = "zip"
   source_file = "${path.module}/../lambda/prediction.js"
@@ -15,7 +18,7 @@ resource "aws_lambda_function" "prediction" {
   runtime          = "nodejs12.x"
   environment {
     variables = {
-      RECAPCHA_SERVER_TOKEN = ''
+      RECAPCHA_SERVER_TOKEN = var.RECAPCHA_SERVER_TOKEN
     }
   }
 }
