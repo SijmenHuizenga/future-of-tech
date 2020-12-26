@@ -87,6 +87,12 @@ anotherButton.addEventListener('click', () => {
     goToInput();
 });
 
+for (let faq of document.getElementsByClassName('faq')) {
+    faq.addEventListener('click', () => {
+        faq.classList.add('show')
+    })
+}
+
 function gotoThanks() {
     inputFormContainer.style.transform = `scale(0, 0)`;
     // wait until the input has vanished
@@ -115,4 +121,7 @@ function goToInput() {
 
 function inputDisabled(disabled) {
     sendButton.disabled = disabled;
+    predictionInput.disabled = disabled;
+    authorInput.disabled = disabled;
+    sendButton.innerHTML = disabled ? 'Sending...' : 'Send prediction to 2031'
 }

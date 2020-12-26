@@ -1,7 +1,6 @@
 body {
     background: #101044;
     color: white;
-    overflow: hidden;
     font-family: /*Safari for OS X and iOS (San Francisco)*/ -apple-system,
         /*Chrome < 56 for OS X (San Francisco)*/ BlinkMacSystemFont,
         /*Windows*/ "Segoe UI",
@@ -10,16 +9,15 @@ body {
         /*Emoji fonts*/ "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-#container {
+.page {
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 100%;
-    height: 100%;
-    font-size: 2rem;
+    min-height: 100%;
 }
 
-.content {
+.content1 {
+    padding-top: 50px;
     max-width: 700px;
     position: relative;
 }
@@ -54,6 +52,7 @@ h1 {
     font-weight: 400;
     margin: 0;
     color: white;
+    font-size: 64px;
 }
 
 p {
@@ -121,4 +120,58 @@ button:hover:enabled {
     textarea {
         grid-column-start: span 1;
     }
+}
+
+.gotoabout {
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+    bottom: 90px;
+    font-size: 50px;
+    text-align: center;
+}
+.gotoabout a {
+    text-decoration: none
+}
+
+.content2 {
+    max-width: 900px;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 45px;
+}
+@media (min-width: 900px) {
+    .faq-grid {
+        width: 700px;
+    }
+}
+h2 {
+    font-size: 55px;
+}
+.faq {
+    font-size: 26px
+}
+.faq span {
+    font-weight: bold;
+}
+.faq:not(.show) span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.faq-extended {
+    display: none;
+    font-size: 20px;
+    padding-left: 20px;
+}
+.faq.show .faq-extended {
+    display: block;
+}
+a {
+    color: white;
 }
