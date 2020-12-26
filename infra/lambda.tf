@@ -13,6 +13,11 @@ resource "aws_lambda_function" "prediction" {
   source_code_hash = data.archive_file.lamda_prediction.output_base64sha256
   publish          = true
   runtime          = "nodejs12.x"
+  environment {
+    variables = {
+      RECAPCHA_SERVER_TOKEN = ''
+    }
+  }
 }
 
 resource "aws_iam_role" "lamda_prediction" {

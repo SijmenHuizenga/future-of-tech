@@ -1,9 +1,12 @@
-<html>
+<html lang="en">
 <head>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Roboto:wght@300;400&display=swap"
           rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <title>Future of Tech</title>
+
     <!--Time flies,-->
     <!--Let's predict where to-->
 
@@ -43,6 +46,7 @@
             transition-property: transform;
             transform-origin: center;
         }
+
         #thanks-container {
             text-align: center;
 
@@ -55,6 +59,7 @@
             left: 0;
             width: 100%;
         }
+
         #thanks-container.show {
             transition: opacity ease-in-out 1.5s;
             opacity: 1;
@@ -122,11 +127,13 @@
             grid-template-rows: repeat(2, auto);
             grid-gap: 15px;
         }
+
         @media (max-width: 800px) {
             .inputgrid {
                 grid-template-columns: repeat(1, 1fr);
                 grid-template-rows: repeat(3, auto);
             }
+
             textarea {
                 grid-column-start: span 1;
             }
@@ -147,7 +154,8 @@
                 You are invited to add your predictions as well!
             </p>
             <div class="inputgrid">
-                <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256" rows="3"></textarea>
+                <textarea id="prediction-input" placeholder="I predict..." class="wide" maxlength="256"
+                          rows="3"></textarea>
                 <input id="author" type="text" placeholder="My name is...   (optional)" maxlength="56"/>
                 <button id="send-button">Store prediction for in 10 years</button>
             </div>
@@ -216,24 +224,35 @@
             return;
         }
 
-        fetch("/api", {
-            method: "POST",
-            body: JSON.stringify({prediction, author})
-        }).then(res => {
-            if (res.ok) {
-                predictionInput.value = '';
-                gotoThanks();
-            } else {
-                console.log(res);
-                alert("The prediction could not be added to the time capsule. Try again later.")
-            }
-            inputDisabled(false);
-        })
-            .catch((err) => {
-                console.log(err);
-                alert("Error: The prediction could not be added to the time capsule. Try again later.");
+        grecaptcha.ready(() => {
+            try {
+                grecaptcha.execute('6LffnBUaAAAAAF3bHkMdZigKelMh6tvOV-BgTMFz', {action: 'submit'})
+                    .then((grecaptchatoken) => fetch("/api", {
+                        method: "POST",
+                        body: JSON.stringify({prediction, author, grecaptchatoken})
+                    }))
+                    .then(res => {
+                        if (res.ok) {
+                            predictionInput.value = '';
+                            gotoThanks();
+                        } else {
+                            console.log(res);
+                            alert("The prediction could not be added to the time capsule. Try again later.")
+                        }
+                        inputDisabled(false);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        alert("Error: The prediction could not be added to the time capsule. Try again later.");
+                        inputDisabled(false);
+                    });
+            } catch (e) {
+                //sometimes recapcha execute throws an error outside of promise (aaah)
+                console.log(e);
+                alert("Re-capcha failed. Try again later");
                 inputDisabled(false);
-            });
+            }
+        });
     });
 
     anotherButton.addEventListener('click', () => {
