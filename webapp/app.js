@@ -97,7 +97,6 @@ sendButton.addEventListener('click', () => {
                 }))
                 .then(res => {
                     if (res.ok) {
-                        predictionInput.value = '';
                         gotoThanks();
                     } else {
                         console.log(res);
@@ -135,6 +134,7 @@ function gotoThanks() {
     setTimeout(() => {
         // show the 'thanks' elements
         thanksFormContainer.style.display = 'block';
+        predictionInput.value = '';
         requestAnimationFrame(() => thanksFormContainer.classList.add('show'));
     }, 3000);
 }
