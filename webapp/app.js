@@ -6,6 +6,7 @@ copyUrlButton = document.getElementById('copy-url-button');
 predictionInput = document.getElementById('prediction-input');
 authorInput = document.getElementById('author');
 titleText = document.getElementById('title-text');
+sampleContainers = document.getElementsByClassName('sample-scroller-scrolling');
 
 testingmode = false;
 
@@ -15,7 +16,7 @@ predictionInput.onkeydown = (e) => {
     }
 };
 
-const titleTexts = [
+const titleTexts = shuffle([
     'code',
     'hacking',
     'robot',
@@ -46,14 +47,12 @@ const titleTexts = [
     'app',
     'sensor',
     'news',
-];
-// Shuffle the titleText order
-titleTexts.sort(() => Math.random() - 0.5);
+    'quantum',
+]);
 
-const examplePredictions = [
+let examplePredictions = shuffle([
     'The browser war will be dominated by opera',
-    'The go-to place for tech-questions will still be StackOverflow',
-    'Marques Brownlee will surpass PewDiePie in number of subscribers',
+    'The go-to place for coding-questions will still be StackOverflow',
     'Angular will have more users than React and Vue combined',
     'Git will have been replaced by something different',
     'Many poor souls are still stuck in vim',
@@ -61,24 +60,29 @@ const examplePredictions = [
     'All smartphones will have 4K displays',
     'In 2030 some people live on mars',
     'The first war between humans and AI will be in progress',
-    'In 2030 some humans will be immortable with the help of AI',
+    'In 2030 some humans will be immortal with the help of AI',
     'A time-traveler from the future will visit us',
     'In 2030 quantum computers are required to play the latest AAA games',
     'Cognitive technically stimuli will be generally available',
     'Python 4 will be the most celebrated language',
-    "I'm going on a spaceday (space holiday) will have been added to the dictionary",
+    "The word 'spaceday' (space holiday) will have been added to the dictionary",
     "AWS will have discontinued EC2 in favor of Lambda's",
     'In 10 years people will still believe VR will be a big thing any moment now',
     'The most prominent used chat application will we Facebook Messenger',
-    "Everything with a power plug will be 'smart' by default",
-    'All parents will tracking the whereabouts of their children continuously',
+    "Everything with a power plug will become 'smart'",
+    'All parents will track the whereabouts of their children continuously',
     'The number of NPM packages will exceed the amount of grains of sand in an average garden pot',
-    'Pace of technology change will increaste exponentionally',
-    'Pace of technology change will decreaste slowly',
-    'In 2030 the ISS will exclusivly be a hotel',
+    'The pace of technology change will increase exponentially',
+    'Pace of technology change will decrease slowly',
+    'In 2030 the ISS will exclusively be a hotel',
     'A single bitcoin will be worth 1 mil',
-    'Blockchain miners will take up 30%+ of the world\'s energy consumption'
-];
+    'Cryptocurrency miners will take up 30%+ of the world\'s energy consumption'
+]);
+examplePredictions.push(...examplePredictions);
+
+for (let sampleContainersKey of sampleContainers) {
+    sampleContainersKey.innerHTML = examplePredictions.map(x => `<p>"${x}"</p>`).join("");
+}
 
 sendButton.addEventListener('click', () => {
     inputDisabled(true);
@@ -229,4 +233,23 @@ function deleteTitleText() {
             typingInterval = setInterval(typeTitleText, textTypeInterval);
         }, textEmptyDelay);
     }
+}
+
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
 }

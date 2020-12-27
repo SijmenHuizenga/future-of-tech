@@ -232,3 +232,48 @@ h2 {
 a {
     color: white;
 }
+
+.sample-scroller-container {
+    position: absolute;
+    height: 80vh;
+    top: 10vh;
+    left: 100px;
+    width: calc((100% - 700px) / 2  - 200px) ;
+    text-align: center;
+    overflow: hidden;
+    opacity: 0.75;
+}
+.sample-scroller-scrolling {
+    position: relative;
+    animation-name: slider-start, slider-forever;
+    animation-duration: 250s, 250s;
+    animation-delay: 0ms, 250s;
+    animation-timing-function: linear, linear;
+    animation-iteration-count: 1, infinite;
+}
+@keyframes slider-start {
+    0%    { transform: translateY(80vh); }
+    100%  { transform: translateY(calc(80vh - 50%)); }
+}
+@keyframes slider-forever {
+    0%    { transform: translateY(calc(80vh - 50%)); }
+    100%  { transform: translateY(calc(80vh - 100%)); }
+}
+
+@media (max-width: 1290px) {
+    .sample-scroller-container {
+        display: none;
+    }
+}
+@media (max-width: 1500px) {
+    .sample-scroller-container {
+        left: 50px;
+        width: calc((100% - 700px) / 2  - 100px) ;
+    }
+}
+
+.sample-scroller-scrolling p {
+    font-size: 20px;
+    padding-bottom: 100px;
+    margin: 0;
+}
