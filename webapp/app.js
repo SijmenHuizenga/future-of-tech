@@ -33,6 +33,16 @@ const titleTexts = [
     'browsers',
     'Git',
     'networks',
+    'medicine',
+    'streaming',
+    'email',
+    'design',
+    'media',
+    'drones',
+    'CDN',
+    'apps',
+    'sensors',
+    'news',
 ];
 // Shuffle the titleText order
 titleTexts.sort(() => Math.random() - 0.5);
