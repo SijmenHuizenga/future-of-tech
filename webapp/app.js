@@ -6,7 +6,7 @@ copyUrlButton = document.getElementById('copy-url-button');
 predictionInput = document.getElementById('prediction-input');
 authorInput = document.getElementById('author');
 titleText = document.getElementById('title-text');
-sampleContainers = document.getElementsByClassName('sample-scroller-scrolling');
+sampleDynamic = document.getElementsByClassName('example-dynamic')[0];
 
 testingmode = false;
 
@@ -78,11 +78,7 @@ let examplePredictions = shuffle([
     'A single bitcoin will be worth 1 mil',
     'Cryptocurrency miners will take up 30%+ of the world\'s energy consumption'
 ]);
-examplePredictions.push(...examplePredictions);
-
-for (let sampleContainersKey of sampleContainers) {
-    sampleContainersKey.innerHTML = examplePredictions.map(x => `<p>"${x}"</p>`).join("");
-}
+sampleDynamic.innerHTML = `"${examplePredictions[0]}"`;
 
 sendButton.addEventListener('click', () => {
     inputDisabled(true);
@@ -191,10 +187,10 @@ function inputDisabled(disabled) {
 }
 
 // Update the text the title
-const textTypeInterval = 100;
-const textDeleteInterval = 50;
+const textTypeInterval = 200;
+const textDeleteInterval = 200;
 const textNextDelay = 4000;
-const textEmptyDelay = 500;
+const textEmptyDelay = 1000;
 
 let titleTextsIndex = 0;
 let cursorPosition = 0;
