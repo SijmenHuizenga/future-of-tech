@@ -89,6 +89,7 @@ sendButton.addEventListener('click', () => {
         return;
     }
 
+    gotoThanks();
     grecaptcha.ready(() => {
         try {
             grecaptcha.execute('6LffnBUaAAAAAF3bHkMdZigKelMh6tvOV-BgTMFz', {action: 'submit'})
@@ -97,9 +98,7 @@ sendButton.addEventListener('click', () => {
                     body: JSON.stringify({prediction, author, grecaptchatoken})
                 }))
                 .then(res => {
-                    if (res.ok) {
-                        gotoThanks();
-                    } else {
+                    if (!res.ok) {
                         console.log(res);
                         alert("The prediction could not be added to the time capsule. Try again later.")
                     }
