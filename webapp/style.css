@@ -78,7 +78,7 @@ h1 {
     font-weight: 400;
     margin: 0;
     color: white;
-    font-size: 64px;
+    font-size: 54px;
 }
 
 p {
@@ -102,6 +102,7 @@ textarea {
     color: white;
     background-color: transparent;
     border: white solid 3px;
+    resize: vertical;
 
     grid-column-start: span 2;
 }
