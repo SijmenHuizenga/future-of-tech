@@ -7,6 +7,8 @@ predictionInput = document.getElementById('prediction-input');
 authorInput = document.getElementById('author');
 titleText = document.getElementById('title-text');
 
+testingmode = false;
+
 predictionInput.onkeydown = (e) => {
     if (e.key === 'Enter') {
         e.preventDefault();
@@ -82,6 +84,12 @@ sendButton.addEventListener('click', () => {
     inputDisabled(true);
     const prediction = predictionInput.value;
     const author = authorInput.value === "" ? null : authorInput.value;
+
+    if(testingmode) {
+        inputDisabled(false);
+        gotoThanks();
+        return
+    }
 
     if (prediction === "") {
         alert("The prediction paper is still empty. I'm sure you can think of something that will change...");
