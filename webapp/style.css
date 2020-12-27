@@ -1,3 +1,7 @@
+html{
+    scroll-behavior:smooth
+}
+
 body {
     background: #101044;
     color: white;
@@ -146,17 +150,25 @@ button:hover:enabled {
     }
 }
 
-.gotoabout {
-    position: absolute;
-    width: 100px;
-    left: 50%;
-    margin-left: -50px;
-    bottom: 90px;
+.goto {
+    width: 100%;
     font-size: 50px;
     text-align: center;
 }
-.gotoabout a {
-    text-decoration: none
+.goto a {
+    display: inline-block;
+    text-decoration: none;
+    transform: translateY(0);
+    transition: 150ms ease;
+}
+
+.goto.goto-down a:hover {
+    transform: translateY(10px);
+    transition: 150ms ease;
+}
+.goto.goto-up a:hover {
+    transform: translateY(-10px);
+    transition: 150ms ease;
 }
 
 .content2 {
