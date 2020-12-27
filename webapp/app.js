@@ -4,12 +4,38 @@ sendButton = document.getElementById('send-button');
 anotherButton = document.getElementById('another-one-button');
 predictionInput = document.getElementById('prediction-input');
 authorInput = document.getElementById('author');
+titleText = document.getElementById('title-text');
 
 predictionInput.onkeydown = (e) => {
     if (e.key === 'Enter') {
         e.preventDefault();
     }
 };
+
+const titleTexts = [
+    'code',
+    'hacking',
+    'robots',
+    'space',
+    'AI',
+    'phones',
+    'games',
+    'the web',
+    'data',
+    'IPv4',
+    'laptops',
+    'privacy',
+    'security',
+    'cars',
+    'bitcoin',
+    'health',
+    'ads',
+    'browsers',
+    'Git',
+    'networks',
+];
+// Shuffle the titleText order
+titleTexts.sort(() => Math.random() - 0.5);
 
 const examplePredictions = [
     'The browser war will be dominated by opera',
@@ -124,4 +150,49 @@ function inputDisabled(disabled) {
     predictionInput.disabled = disabled;
     authorInput.disabled = disabled;
     sendButton.innerHTML = disabled ? 'Sending...' : 'Send prediction to 2031'
+}
+
+// Update the text the title
+const textTypeInterval = 100;
+const textDeleteInterval = 50;
+const textNextDelay = 2000;
+const textEmptyDelay = 500;
+
+let titleTextsIndex = 0;
+let cursorPosition = 0;
+let typingInterval;
+setTimeout(() => {
+    typingInterval = setInterval(typeTitleText, textTypeInterval);
+}, textNextDelay);
+
+// Start typing new text in the title
+function typeTitleText() {
+    cursorPosition++;
+    titleText.innerHTML = titleTexts[titleTextsIndex].substring(0, cursorPosition);
+
+    // If the text is typed start deleting it in a moment
+    if (titleText.innerHTML === titleTexts[titleTextsIndex]) {
+        clearInterval(typingInterval);
+        setTimeout(() => {
+            typingInterval = setInterval(deleteTitleText, textDeleteInterval);
+        }, textNextDelay);
+    }
+}
+
+// Remove the typed text in the title
+function deleteTitleText() {
+    cursorPosition--;
+    titleText.innerHTML = titleTexts[titleTextsIndex].substring(0, cursorPosition);
+
+    // If the text is cleared jump to the next text
+    if (titleText.innerHTML === '') {
+        clearInterval(typingInterval);
+        titleTextsIndex < titleTexts.length - 1 ? titleTextsIndex++ : titleTextsIndex = 0;
+        cursorPosition = 0;
+
+        // Display the next text after some time
+        setTimeout(() => {
+            typingInterval = setInterval(typeTitleText, textTypeInterval);
+        }, textEmptyDelay);
+    }
 }

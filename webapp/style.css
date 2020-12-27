@@ -22,6 +22,28 @@ body {
     position: relative;
 }
 
+#title-text {
+	display: inline-block;
+    font-weight: bold;
+}
+
+#title-cursor {
+	display: inline-block;
+	vertical-align: middle;
+	width: 3px;
+	height: 50px;
+	animation: blink .75s step-end infinite;
+}
+
+@keyframes blink {
+	from, to {
+		background-color: transparent
+	}
+	50% {
+		background-color: white;
+	}
+}
+
 #input-form-container {
     transition-timing-function: ease-in;
     transition-duration: 3s;
@@ -99,9 +121,11 @@ button {
     color: white;
 }
 
+button:focus:enabled,
 button:hover:enabled {
     background-color: white;
     color: #101044;
+    cursor: pointer;
 }
 
 .inputgrid {
