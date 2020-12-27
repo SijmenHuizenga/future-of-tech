@@ -132,6 +132,22 @@ button:hover:enabled {
     cursor: pointer;
 }
 
+.text-button {
+    text-align: left;
+    border: none;
+    padding: 0;
+    font-weight: bold;
+    font-size: 26px;
+}
+.text-button:focus:enabled,
+.text-button:hover:enabled {
+    background-color: transparent;
+    color: white;
+    text-decoration: underline;
+    outline: none;
+}
+
+
 .inputgrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -162,10 +178,12 @@ button:hover:enabled {
     transition: 150ms ease;
 }
 
+.goto.goto-down a:focus,
 .goto.goto-down a:hover {
     transform: translateY(10px);
     transition: 150ms ease;
 }
+.goto.goto-up a:focus,
 .goto.goto-up a:hover {
     transform: translateY(-10px);
     transition: 150ms ease;
@@ -190,16 +208,6 @@ button:hover:enabled {
 h2 {
     font-size: 55px;
 }
-.faq {
-    font-size: 26px
-}
-.faq span {
-    font-weight: bold;
-}
-.faq:not(.show) span:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
 .faq-extended {
     display: none;
     font-size: 20px;
@@ -207,6 +215,11 @@ h2 {
 }
 .faq.show .faq-extended {
     display: block;
+}
+.faq.show .text-button:focus:enabled,
+.faq.show .text-button:hover:enabled {
+    cursor: default;
+    text-decoration: none;
 }
 a {
     color: white;
