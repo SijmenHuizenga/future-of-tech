@@ -2,6 +2,7 @@ inputFormContainer = document.getElementById('input-form-container');
 thanksFormContainer = document.getElementById('thanks-container');
 sendButton = document.getElementById('send-button');
 anotherButton = document.getElementById('another-one-button');
+copyUrlButton = document.getElementById('copy-url-button');
 predictionInput = document.getElementById('prediction-input');
 authorInput = document.getElementById('author');
 titleText = document.getElementById('title-text');
@@ -120,6 +121,22 @@ sendButton.addEventListener('click', () => {
 
 anotherButton.addEventListener('click', () => {
     goToInput();
+});
+
+copyUrlButton.addEventListener('click', () => {
+    const tmp = document.createElement('input');
+    document.body.appendChild(tmp);
+    tmp.value = window.location.href;
+    tmp.select();
+    document.execCommand('copy');
+    document.body.removeChild(tmp);
+
+    if (copyUrlButton.innerHTML == 'Copy url') {
+        copyUrlButton.innerHTML = 'Copied';
+    } else {
+        copyUrlButton.innerHTML += ' again';
+    }
+
 });
 
 for (let faq of document.getElementsByClassName('faq')) {
