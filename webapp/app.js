@@ -16,33 +16,33 @@ predictionInput.onkeydown = (e) => {
 const titleTexts = [
     'code',
     'hacking',
-    'robots',
+    'robot',
     'space',
     'AI',
-    'phones',
-    'games',
+    'phone',
+    'game',
     'the web',
     'data',
     'IPv4',
-    'laptops',
+    'laptop',
     'privacy',
     'security',
-    'cars',
+    'car',
     'bitcoin',
     'health',
     'ads',
-    'browsers',
+    'browser',
     'Git',
-    'networks',
+    'network',
     'medicine',
     'streaming',
     'email',
     'design',
     'media',
-    'drones',
+    'drone',
     'CDN',
-    'apps',
-    'sensors',
+    'app',
+    'sensor',
     'news',
 ];
 // Shuffle the titleText order
@@ -182,7 +182,7 @@ function inputDisabled(disabled) {
 // Update the text the title
 const textTypeInterval = 100;
 const textDeleteInterval = 50;
-const textNextDelay = 2000;
+const textNextDelay = 4000;
 const textEmptyDelay = 500;
 
 let titleTextsIndex = 0;

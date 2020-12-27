@@ -5,6 +5,7 @@ html{
 body {
     background: #101044;
     color: white;
+    height: 100vh;
     font-family: /*Safari for OS X and iOS (San Francisco)*/ -apple-system,
         /*Chrome < 56 for OS X (San Francisco)*/ BlinkMacSystemFont,
         /*Windows*/ "Segoe UI",
@@ -38,6 +39,11 @@ body {
 	height: 50px;
 	animation: blink .75s step-end infinite;
 }
+@media (min-width: 600px) {
+    #title-pred {
+        display: inline;
+    }
+}
 
 @keyframes blink {
 	from, to {
@@ -49,6 +55,7 @@ body {
 }
 
 #input-form-container {
+    margin: 0 0 25px;
     transition-timing-function: ease-in;
     transition-duration: 3s;
     transition-property: transform;
