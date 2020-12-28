@@ -44,6 +44,13 @@ exports.handler = function (event, context, callback) {
     return
   }
 
+  if(Math.floor(new Date().getTime() / 1000) > 1610927940) {
+    callback(null, {
+      statusCode: 400,
+      body: 'Submission deadline has passed.',
+    });
+  }
+
   let json;
   try {
     json = JSON.parse(event["body"]);
