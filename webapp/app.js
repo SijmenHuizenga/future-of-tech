@@ -135,20 +135,32 @@ anotherButton.addEventListener('click', () => {
 });
 
 copyUrlButton.addEventListener('click', () => {
+    // try sharing using the experimental sharing api, else send to clipboard
+    try {
+        navigator.share({
+            title: 'Join me in predicting the future of tech?',
+            text: 'Hi! I\'m adding my tech predictions to a time capsule. Would you like to join me? Visit https://future-of.technology',
+            url: 'https://future-of.technology',
+        }).catch(copyMessageToClipboard)
+    } catch(err) {
+        copyMessageToClipboard()
+    }
+});
+
+function copyMessageToClipboard() {
     const tmp = document.createElement('input');
     document.body.appendChild(tmp);
-    tmp.value = window.location.href;
+    tmp.value = "Hi! I'm adding my tech predictions to a time capsule. Would you like to join me? Visit https://future-of.technology";
     tmp.select();
     document.execCommand('copy');
     document.body.removeChild(tmp);
 
-    if (copyUrlButton.innerHTML == 'Copy url') {
-        copyUrlButton.innerHTML = 'Copied';
+    if (copyUrlButton.innerHTML == 'Share') {
+        copyUrlButton.innerHTML = 'Message copied to clipboard';
     } else {
         copyUrlButton.innerHTML += ' again';
     }
-
-});
+}
 
 for (let faq of document.getElementsByClassName('faq')) {
     faq.addEventListener('click', () => {
@@ -157,6 +169,9 @@ for (let faq of document.getElementsByClassName('faq')) {
 }
 
 function gotoThanks() {
+    // reset share button in case it was set to 'sent to clipboard'
+    copyUrlButton.innerHTML = 'Share';
+
     inputFormContainer.style.transform = `scale(0, 0)`;
     // wait until the input has vanished
     thanksTimout = setTimeout(() => {

@@ -162,6 +162,9 @@ button:hover:enabled {
     text-decoration: underline;
     outline: none;
 }
+#copy-url-button {
+    margin-bottom: 30px;
+}
 
 
 .inputgrid {
