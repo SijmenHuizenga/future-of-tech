@@ -58,7 +58,6 @@ let examplePredictions = shuffle([
     'Many poor souls are still stuck in vim',
     'Google will encounter a week long global outage',
     'All smartphones will have 4K displays',
-    'In 2030 some people live on mars',
     'The first war between humans and AI will be in progress',
     'In 2030 some humans will be immortal with the help of AI',
     'A time-traveler from the future will visit us',
@@ -79,6 +78,8 @@ let examplePredictions = shuffle([
     'Cryptocurrency miners will take up 30%+ of the world\'s energy consumption'
 ]);
 sampleDynamic.innerHTML = `"${examplePredictions[0]}"`;
+
+var thanksTimout = null;
 
 sendButton.addEventListener('click', () => {
     inputDisabled(true);
@@ -108,6 +109,7 @@ sendButton.addEventListener('click', () => {
                 .then(res => {
                     if (!res.ok) {
                         console.log(res);
+                        goToInput();
                         alert("The prediction could not be added to the time capsule. Try again later.")
                     }
                     inputDisabled(false);
@@ -116,11 +118,13 @@ sendButton.addEventListener('click', () => {
                     console.log(err);
                     alert("Error: The prediction could not be added to the time capsule. Try again later.");
                     inputDisabled(false);
+                    goToInput();
                 });
         } catch (e) {
             //sometimes recapcha execute throws an error outside of promise (aaah)
             console.log(e);
             alert("Re-capcha failed. Try again later");
+            goToInput();
             inputDisabled(false);
         }
     });
@@ -155,7 +159,7 @@ for (let faq of document.getElementsByClassName('faq')) {
 function gotoThanks() {
     inputFormContainer.style.transform = `scale(0, 0)`;
     // wait until the input has vanished
-    setTimeout(() => {
+    thanksTimout = setTimeout(() => {
         // show the 'thanks' elements
         thanksFormContainer.style.display = 'block';
         predictionInput.value = '';
@@ -165,6 +169,7 @@ function gotoThanks() {
 
 function goToInput() {
     // hide the 'thanks' elements
+    clearTimeout(thanksTimout);
     thanksFormContainer.classList.remove('show');
     setTimeout(() => thanksFormContainer.style.display = 'none', 1500);
 
