@@ -31,6 +31,12 @@ body {
 	display: inline-block;
     font-weight: bold;
 }
+@media (max-width: 390px) {
+    #title-text {
+        min-width: 200px;
+        min-height: 70px;
+    }
+}
 
 #title-cursor {
 	display: inline-block;
