@@ -12,6 +12,7 @@ body {
         /*Android*/ "Roboto",
         /*Basic web fallback */ "Helvetica Neue", Arial, sans-serif,
         /*Emoji fonts*/ "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    overflow-x: hidden;
 }
 
 .page {
