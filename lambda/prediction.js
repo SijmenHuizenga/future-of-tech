@@ -28,7 +28,7 @@ function storePrediction(id, prediction, author, capchaReport) {
     Item: {
       'UUID' : {S: id},
       'prediction': {S: prediction},
-      'author': {S: author},
+      ...(author !== null && {'author': {S: author}}),
       'timestamp': {N: ''+Math.floor(new Date().getTime() / 1000)},
       'capcharScore': {N: ''+capchaReport.score}
     }
@@ -94,7 +94,7 @@ exports.handler = function (event, context, callback) {
   }
 
   verifyRecapcha(json['grecaptchatoken'])
-      .then((capchaReport) => storePrediction(context.awsRequestId, json['prediction'], json.hasOwnProperty('author') ? json['author'] : '', capchaReport))
+      .then((capchaReport) => storePrediction(context.awsRequestId, json['prediction'], json.hasOwnProperty('author') ? json['author'] : null, capchaReport))
       .then(() =>
         callback(null, {
           statusCode: 200,
