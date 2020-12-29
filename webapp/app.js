@@ -131,6 +131,7 @@ sendButton.addEventListener('click', () => {
 });
 
 anotherButton.addEventListener('click', () => {
+    predictionInput.focus();
     goToInput();
 });
 
@@ -189,14 +190,9 @@ function goToInput() {
     setTimeout(() => thanksFormContainer.style.display = 'none', 1500);
 
     // make the form appear
-    inputFormContainer.style.transitionTimingFunction = 'ease-in';
-    inputFormContainer.style.transitionDuration = '0s';
-    inputFormContainer.style.transform = `scale(80, 80)`;
-    requestAnimationFrame(() => {
-        inputFormContainer.style.transitionDuration = '3s';
-        inputFormContainer.style.transform = `scale(1, 1)`;
-        inputFormContainer.style.transitionTimingFunction = 'ease-out';
-    });
+    inputFormContainer.style.transitionDuration = '3s';
+    inputFormContainer.style.transform = `scale(1, 1)`;
+    inputFormContainer.style.transitionTimingFunction = 'ease-out';
 }
 
 function inputDisabled(disabled) {
