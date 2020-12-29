@@ -71,6 +71,7 @@ body {
 }
 
 #thanks-container {
+    margin-top: 30vh;
     text-align: center;
 
     transition: opacity ease-in-out 1.5s;
