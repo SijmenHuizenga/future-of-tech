@@ -67,7 +67,7 @@ let examplePredictions = shuffle([
     "The word 'spaceday' (space holiday) will have been added to the dictionary",
     "AWS will have discontinued EC2 in favor of Lambda's",
     'In 10 years people will still believe VR will be a big thing any moment now',
-    'The most prominent used chat application will we Facebook Messenger',
+    'The most prominent used chat application will be Facebook Messenger',
     "Everything with a power plug will become 'smart'",
     'All parents will track the whereabouts of their children continuously',
     'The number of NPM packages will exceed the amount of grains of sand in an average garden pot',
@@ -92,7 +92,7 @@ sendButton.addEventListener('click', () => {
         return
     }
 
-    if (prediction === "") {
+    if (prediction.trim() === "") {
         alert("The prediction paper is still empty. I'm sure you can think of something that will change...");
         inputDisabled(false);
         return;

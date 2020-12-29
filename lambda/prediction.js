@@ -22,13 +22,13 @@ function verifyRecapcha(recapchaResponseToken) {
     });
 }
 
-function storePrediction(id, json, capchaReport) {
+function storePrediction(id, prediction, author, capchaReport) {
   return ddb.putItem({
     TableName: 'Predictions',
     Item: {
       'UUID' : {S: id},
-      'prediction': {S: json['prediction']},
-      'author': {S: json.hasOwnProperty('author') ? json['author'] : ''},
+      'prediction': {S: prediction},
+      'author': {S: author},
       'timestamp': {N: ''+Math.floor(new Date().getTime() / 1000)},
       'capcharScore': {N: ''+capchaReport.score}
     }
@@ -85,8 +85,16 @@ exports.handler = function (event, context, callback) {
     return
   }
 
+  if(json['prediction'].trim() === '') {
+    callback(null, {
+      statusCode: 400,
+      body: 'prediction is empty',
+    });
+    return
+  }
+
   verifyRecapcha(json['grecaptchatoken'])
-      .then((capchaReport) => storePrediction(context.awsRequestId, json, capchaReport))
+      .then((capchaReport) => storePrediction(context.awsRequestId, json['prediction'], json.hasOwnProperty('author') ? json['author'] : '', capchaReport))
       .then(() =>
         callback(null, {
           statusCode: 200,
