@@ -246,3 +246,7 @@ h2 {
 a {
     color: white;
 }
+
+blockquote {
+    font-size: 25px;
+}

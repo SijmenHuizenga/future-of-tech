@@ -3,12 +3,13 @@ thanksFormContainer = document.getElementById('thanks-container');
 sendButton = document.getElementById('send-button');
 anotherButton = document.getElementById('another-one-button');
 copyUrlButton = document.getElementById('copy-url-button');
+mypredictionBlockquote = document.getElementById('myprediction');
 predictionInput = document.getElementById('prediction-input');
 authorInput = document.getElementById('author');
 titleText = document.getElementById('title-text');
 sampleDynamic = document.getElementsByClassName('example-dynamic')[0];
 
-testingmode = false;
+testingmode = true;
 
 predictionInput.onkeydown = (e) => {
     if (e.key === 'Enter') {
@@ -80,11 +81,13 @@ let examplePredictions = shuffle([
 sampleDynamic.innerHTML = `"${examplePredictions[0]}"`;
 
 var thanksTimout = null;
+var prediction = null;
+var author = null;
 
 sendButton.addEventListener('click', () => {
     inputDisabled(true);
-    const prediction = predictionInput.value;
-    const author = authorInput.value === "" ? null : authorInput.value;
+    prediction = predictionInput.value;
+    author = authorInput.value === "" ? null : authorInput.value;
 
     if(testingmode) {
         inputDisabled(false);
@@ -136,22 +139,9 @@ anotherButton.addEventListener('click', () => {
 });
 
 copyUrlButton.addEventListener('click', () => {
-    // try sharing using the experimental sharing api, else send to clipboard
-    try {
-        navigator.share({
-            title: 'Join me in predicting the future of tech?',
-            text: 'Hi! I\'m adding my tech predictions to a time capsule. Would you like to join me? Visit https://future-of.technology',
-            url: 'https://future-of.technology',
-        }).catch(copyMessageToClipboard)
-    } catch(err) {
-        copyMessageToClipboard()
-    }
-});
-
-function copyMessageToClipboard() {
     const tmp = document.createElement('input');
     document.body.appendChild(tmp);
-    tmp.value = "Hi! I'm adding my tech predictions to a time capsule. Would you like to join me? Visit https://future-of.technology";
+    tmp.value = `My tech-prediction for 2031: "${prediction}". What do you predict? https://future-of.technology`;
     tmp.select();
     document.execCommand('copy');
     document.body.removeChild(tmp);
@@ -161,7 +151,7 @@ function copyMessageToClipboard() {
     } else {
         copyUrlButton.innerHTML += ' again';
     }
-}
+});
 
 for (let faq of document.getElementsByClassName('faq')) {
     faq.addEventListener('click', () => {
@@ -172,6 +162,7 @@ for (let faq of document.getElementsByClassName('faq')) {
 function gotoThanks() {
     // reset share button in case it was set to 'sent to clipboard'
     copyUrlButton.innerHTML = 'Share';
+    mypredictionBlockquote.innerHTML = `"${prediction}" <br/>&nbsp;&nbsp;${author == null ? '' : '-&nbsp;&nbsp;' + author}`;
 
     inputFormContainer.style.transform = `scale(0, 0)`;
     // wait until the input has vanished
