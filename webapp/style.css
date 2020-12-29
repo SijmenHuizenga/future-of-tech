@@ -112,7 +112,6 @@ textarea, button, input, input[type=text] {
 }
 
 textarea {
-    width: 100%;
     padding: 25px;
     color: white;
     background-color: transparent;
