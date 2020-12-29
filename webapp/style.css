@@ -149,23 +149,19 @@ button:hover:enabled {
 }
 
 .text-button {
-    text-align: left;
-    border: none;
-    padding: 0;
+    text-decoration: none;
     font-weight: bold;
     font-size: 26px;
 }
-.text-button:focus:enabled,
-.text-button:hover:enabled {
-    background-color: transparent;
-    color: white;
+
+.text-button:focus,
+.text-button:hover {
     text-decoration: underline;
     outline: none;
 }
 #copy-url-button {
     margin-bottom: 30px;
 }
-
 
 .inputgrid {
     display: grid;
@@ -246,11 +242,6 @@ h2 {
 }
 .faq.show .faq-extended {
     display: block;
-}
-.faq.show .text-button:focus:enabled,
-.faq.show .text-button:hover:enabled {
-    cursor: default;
-    text-decoration: none;
 }
 a {
     color: white;

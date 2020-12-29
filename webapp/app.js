@@ -164,7 +164,7 @@ function copyMessageToClipboard() {
 
 for (let faq of document.getElementsByClassName('faq')) {
     faq.addEventListener('click', () => {
-        faq.classList.add('show')
+        faq.classList.toggle('show')
     })
 }
 
