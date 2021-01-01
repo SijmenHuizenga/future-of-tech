@@ -250,3 +250,8 @@ a {
 blockquote {
     font-size: 25px;
 }
+
+.license-notice{
+    font-size: 16px;
+    margin-top: 6px;
+}

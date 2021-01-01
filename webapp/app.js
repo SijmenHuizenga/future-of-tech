@@ -9,7 +9,7 @@ authorInput = document.getElementById('author');
 titleText = document.getElementById('title-text');
 sampleDynamic = document.getElementsByClassName('example-dynamic')[0];
 
-testingmode = true;
+testingmode = false;
 
 predictionInput.onkeydown = (e) => {
     if (e.key === 'Enter') {
