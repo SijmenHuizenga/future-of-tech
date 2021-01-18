@@ -39,56 +39,6 @@ body {
     }
 }
 
-#title-cursor {
-	display: inline-block;
-	vertical-align: middle;
-	width: 3px;
-	height: 50px;
-	animation: blink 1.75s step-end infinite;
-    display: none;
-}
-@media (min-width: 600px) {
-    #title-pred {
-        display: inline;
-    }
-}
-
-@keyframes blink {
-	from, to {
-		background-color: transparent
-	}
-	50% {
-		background-color: white;
-	}
-}
-
-#input-form-container {
-    margin: 0 0 25px;
-    transition-timing-function: ease-in;
-    transition-duration: 3s;
-    transition-property: transform;
-    transform-origin: center;
-}
-
-#thanks-container {
-    margin-top: 30vh;
-    text-align: center;
-
-    transition: opacity ease-in-out 1.5s;
-    opacity: 0;
-    display: none;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-#thanks-container.show {
-    transition: opacity ease-in-out 1.5s;
-    opacity: 1;
-}
-
 h1 {
     font-family: 'Caveat', cursive;
     font-weight: 400;
@@ -103,51 +53,6 @@ p {
     color: white;
 }
 
-strong {
-    font-weight: 700;
-}
-
-textarea, button, input, input[type=text] {
-    font-family: inherit;
-    font-size: 20px;
-}
-
-textarea {
-    padding: 25px;
-    color: white;
-    background-color: transparent;
-    border: white solid 3px;
-    resize: vertical;
-
-    grid-column-start: span 2;
-}
-
-input {
-    padding: 25px;
-    color: white;
-    background-color: transparent;
-    border: white solid 3px;
-}
-
-input[type=text] {
-    word-wrap: break-word;
-    word-break: break-all;
-}
-
-button {
-    padding: 25px;
-    border: white solid 3px;
-    background-color: transparent;
-    color: white;
-}
-
-button:focus:enabled,
-button:hover:enabled {
-    background-color: white;
-    color: #101044;
-    cursor: pointer;
-}
-
 .text-button {
     text-decoration: none;
     font-weight: bold;
@@ -158,39 +63,6 @@ button:hover:enabled {
 .text-button:hover {
     text-decoration: underline;
     outline: none;
-}
-#copy-url-button {
-    margin-bottom: 30px;
-}
-
-.inputgrid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, auto);
-    grid-gap: 15px;
-}
-.examplewrapper {
-    margin: 30px 0;
-    width: 100%;
-    grid-column-start: span 2;
-    display: flex;
-    flex-direction: column;
-}
-.example {
-    font-style: italic;
-    text-align: right;
-    margin: 5px;
-}
-
-@media (max-width: 800px) {
-    .inputgrid {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: repeat(3, auto);
-    }
-
-    textarea {
-        grid-column-start: span 1;
-    }
 }
 
 .goto {
@@ -245,13 +117,4 @@ h2 {
 }
 a {
     color: white;
-}
-
-blockquote {
-    font-size: 25px;
-}
-
-.license-notice{
-    font-size: 16px;
-    margin-top: 6px;
 }
